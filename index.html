@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fluent button click cancellation bug</title>
+    <style>
+      body {
+        font:
+          16px/1.5 system-ui,
+          sans-serif;
+        max-width: 40rem;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      pre {
+        min-height: 3rem;
+        padding: 1rem;
+        background: #f3f3f3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Fluent button click cancellation bug</h1>
+    <p>
+      Both buttons call <code>event.preventDefault()</code> in their click handlers. Click each
+      button. Neither should fire a form submit event.
+    </p>
+    <h2>Native button</h2>
+    <form id="native-form">
+      <button type="submit" disabled>Submit (native)</button>
+    </form>
+    <pre id="native-log" aria-live="polite"></pre>
+    <h2>Fluent button</h2>
+    <form id="fluent-form">
+      <fluent-button type="submit" disabled>Submit (Fluent)</fluent-button>
+    </form>
+    <pre id="fluent-log" aria-live="polite"></pre>
+    <p>
+      Expected: both logs show only <strong>click: preventDefault()</strong>. Actual: Fluent fires
+      <strong>submit</strong> before its click handler runs. Reload the page to clear the logs.
+    </p>
+    <p>The submit handlers also prevent navigation so you can read the logs.</p>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
